@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+class SegmentTree{
+  int no_of_nodes;
+  int *segement_tree;
+public:
+  SegmentTree(int*, int);
+
+};
+int main(){
+  int A[] = {1,0,1,0,0,1,1,1};
+  int n = sizeof(A)/sizeof(A[0]);
+
+  int k = 4;
+  
+  return 0;
+}

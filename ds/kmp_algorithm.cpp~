@@ -1,0 +1,48 @@
+#include<iostream>
+using namespace std;
+
+
+void ComputeLSArray(char *pat, int *ls, int n){
+  //first element ls value is 0
+  ls[0] = 0;
+  // set previous length proper profix that is also suffix
+  int len = 0;
+
+  int i=1;
+
+  while(i<n){
+    if(pat[i] == pat[len]){
+      len++;
+      ls[i] = len;
+      ++i;
+    }else{
+      if(len!=0){
+	len=ls[len-1];
+      }else{
+	ls[i] = 0;
+        ++i;
+
+      }
+
+    }
+
+
+  }
+  
+
+
+}
+int main(){
+  char pat[] = "ABABCABAB";
+  int n = sizeof(pat)/sizeof(char);
+
+  //define ls array
+  int ls[n];
+  ComputeLSArray(pat, ls, n);
+
+  for(int i=0;i<n;++i)
+    cout << ls[i] << " ";
+  cout << endl;
+
+    return 0;
+}

@@ -1,0 +1,73 @@
+#include<iostream>
+#define V 4
+using namespace std;
+
+
+void PrintTransitiveClosure(int A[][V]){
+  for(int i=0;i<V;++i){
+    for(int j=0;j<V;++j){
+      cout << A[i][j] << " ";
+    }
+    cout << endl;
+  }
+}
+
+
+void TransitiveClosure(int graph[][V]){
+  int closure_graph[V][V];
+
+  for(int i=0;i<V;++i){
+    for(int j=0;j<V;++j){
+      closure_graph[i][j] = graph[i][j];
+    }
+  }
+
+
+  for(int i=0;i<V;++i){
+    for(int j=0;j<V;++j){
+      // check for direct connection
+      if(graph[i][j] || i==j)
+	closure_graph[i][j] = 1;
+      else{
+	for(int z=0;z<V;++z){
+	  if(i!=z && closure_graph[i][z]){
+	     closure_graph[i][j] = graph[z][j];
+	     break;
+	  }
+	   
+	}
+      }
+
+      
+    }
+  }
+
+  PrintTransitiveClosure(closure_graph);
+}
+
+
+
+
+int main(){
+
+
+   /* Let us create the following weighted graph 
+            10 
+       (0)------->(3) 
+        |         /|\ 
+      5 |          | 
+        |          | 1 
+       \|/         | 
+       (1)------->(2) 
+            3           */
+    int graph[V][V] = { {1, 1, 0, 1}, 
+                        {0, 1, 1, 0}, 
+                        {0, 0, 1, 1}, 
+                        {0, 0, 0, 1} 
+                      };
+
+
+    
+    TransitiveClosure(graph);
+
+}

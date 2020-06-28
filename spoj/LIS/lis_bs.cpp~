@@ -1,0 +1,10 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+  int A[] = { 2, 5, 3, 7, 11, 8, 10, 13, 6 };
+  int n = sizeof(A)/sizeof(A[0]);
+
+  cout << LisBinarySearch(A, n) << endl;
+  return 0;
+}

@@ -1,0 +1,157 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+class SegmentTree{
+  int noOfNodes;
+  int *segmentTree;
+  int *lazyArray;
+public:
+  SegmentTree(int *, int);
+  int ComputeMidIndex(int, int);
+  void Build(int, int, int, int*);
+  void Display();
+  void RangeUpdate(int, int, int, int);
+  void RangeUpdateUtil(int, int, int, int, int, int);
+  int RangeQuery(int, int, int);
+  int RangeQueryUtil(int, int, int, int, int);
+};
+
+SegmentTree::SegmentTree(int *A, int n){
+  int height = int(ceil(log2(n)));
+  noOfNodes = 2*int(pow(2,height)) - 1;
+
+  segmentTree = new int[noOfNodes];
+  lazyArray = new int[noOfNodes];
+
+  for(int i=0;i<noOfNodes;++i)
+    lazyArray[i] = 0;
+
+  //build the segment tree
+  Build(0, 0, n-1, A);
+}
+
+int SegmentTree::ComputeMidIndex(int nodeStart, int nodeEnd){
+  return nodeStart + (nodeEnd - nodeStart)/2;
+}
+void SegmentTree::Build(int node, int nodeStart, int nodeEnd, int *A){
+
+  // exit condition
+  if(nodeStart == nodeEnd){
+    segmentTree[node] = A[nodeStart];
+    return;
+  }
+  int mid = ComputeMidIndex(nodeStart, nodeEnd);
+
+  //first build the left subtree, and right subtree
+  Build(2*node+1, nodeStart, mid, A);
+
+  Build(2*node+2, mid+1, nodeEnd, A);
+
+  //update the current node
+  segmentTree[node] = segmentTree[2*node+1] + segmentTree[2*node+2];
+}
+
+void SegmentTree::Display(){
+  for(int i=0;i<noOfNodes;++i)
+    cout << segmentTree[i] << " ";
+  cout << endl;
+}
+
+void SegmentTree::RangeUpdate(int n, int left, int right, int diff){
+  RangeUpdateUtil(0, 0, n-1, left, right, diff);
+
+}
+void SegmentTree::RangeUpdateUtil(int node, int nodeStart, int nodeEnd, int left, int right, int diff){
+  if(lazyArray[node]){
+    segmentTree[node] += (nodeEnd-nodeStart+1)*lazyArray[node];
+
+    // propagate it to childrens if there are any
+    if(nodeStart!=nodeEnd){
+      lazyArray[2*node+1] += lazyArray[node];
+      lazyArray[2*node+2] += lazyArray[node];	
+    }
+    lazyArray[node] = 0;
+  }
+
+
+  if(left>nodeEnd || right<nodeStart){
+    return;
+  }
+
+  if(left<=nodeStart && right>=nodeEnd){
+    segmentTree[node] += (nodeEnd-nodeStart+1)*diff;
+
+    // propagate it to the childrens if there are any
+    if(nodeStart!=nodeEnd){
+      lazyArray[2*node+1] += diff;
+      lazyArray[2*node+2] += diff; 
+    }
+    return;
+  }
+
+  
+  int mid = ComputeMidIndex(nodeStart, nodeEnd);
+
+  RangeUpdateUtil(2*node+1, nodeStart, mid, left, right, diff);
+  RangeUpdateUtil(2*node+2, mid+1, nodeEnd, left, right, diff);
+
+  segmentTree[node] = segmentTree[2*node+1] + segmentTree[2*node+2];
+}
+
+int SegmentTree::RangeQuery(int n, int left, int right){
+  return RangeQueryUtil(0, 0, n-1, left, right);
+}
+
+int SegmentTree::RangeQueryUtil(int node, int nodeStart, int nodeEnd, int left, int right){
+  if(lazyArray[node]){
+    segmentTree[node] += (nodeEnd-nodeStart+1)*lazyArray[node];
+
+    // propagate it to childrens if there are any
+    if(nodeStart!=nodeEnd){
+      lazyArray[2*node+1] += lazyArray[node];
+      lazyArray[2*node+2] += lazyArray[node];
+    }
+
+    lazyArray[node] = 0;
+  }
+
+  if(left>nodeEnd || right<nodeStart){
+    return 0;
+  }
+
+  if(left<=nodeStart && right>=nodeEnd){
+    return segmentTree[node];
+  }
+  
+  int mid = ComputeMidIndex(nodeStart, nodeEnd);
+  int a = RangeQueryUtil(2*node+1, nodeStart, mid, left, right);
+  int b = RangeQueryUtil(2*node+2, mid+1, nodeEnd, left, right);
+
+  return a + b;
+  
+
+
+}
+
+int main(){
+
+  int A[] = {1, 3, 4, 2};
+  int n =sizeof(A)/sizeof(A[0]);
+
+  SegmentTree segmentTree(A, n);
+
+  segmentTree.Display();
+
+
+  segmentTree.RangeUpdate(n, 0, 1, 1); // check this
+
+  cout << segmentTree.RangeQuery(n, 0, n-1) << endl;
+  cout << segmentTree.RangeQuery(n, 0, 1) << endl;
+
+  cout << segmentTree.RangeQuery(n, 1, 2) << endl;
+  cout << segmentTree.RangeQuery(n, 1, 3) << endl;
+  cout << segmentTree.RangeQuery(n, 0, 2) << endl;
+ 
+  return 0;
+}

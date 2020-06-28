@@ -1,0 +1,20 @@
+#include<iostrream>
+#include<cmath>
+
+using namespace std;
+
+/*
+class SegmentTree{
+  
+
+};
+*/
+int main(){
+  vector<int> vect;
+  vect.push_back(10);
+  vect.push_back(20);
+
+  cout << vect.size() << endl;
+
+  return 0;
+}

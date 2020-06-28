@@ -1,0 +1,29 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+  int n,m;
+  cin >> n;
+
+  int S[n];
+  for(int i=0;i<n;++i)
+    cin >> S[i];
+
+  cin >> m;
+  int Q[m];
+  for(int i=0;i<m;++i)
+    cin >> Q[i];
+
+  int l = n;
+  if(l>m)
+    l = m;
+
+  for(int i=0;i<l;++i){
+    if(S[i] == Q[i])
+      cout << (i+1) << " ";
+  }
+  cout << endl;
+  
+
+  return 0;
+}

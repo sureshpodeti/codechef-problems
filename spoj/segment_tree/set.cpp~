@@ -1,0 +1,13 @@
+#include<iostream>
+#include<set>
+
+using namespace std;
+
+int main(){
+  set<int> a;
+  a.insert(10);
+  a.insert(20);
+
+  cout << a.size() << endl;
+  return 0;
+}

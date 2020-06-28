@@ -1,0 +1,32 @@
+#include<iostream>
+#include<list>
+using namespace std;
+
+class Graph{
+  int no_of_vertices;
+  list<int> *graph;
+public:
+  Graph(int);
+  void AddEdge(int,int);
+};
+
+
+Graph:Graph(int n){
+  no_of_vertices = n;
+
+  graph = new list<int>[no_of_vertices];
+  
+}
+
+void Graph::AddEdge(int a, int b){
+  graph[a-1].push_back(b-1);
+}
+
+
+
+
+int main(){
+  
+
+  return 0;
+}

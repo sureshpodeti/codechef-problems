@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1555694431 source:/Users/spodeti/Documents/C++/projects/foo/main.cpp
+	<iostream>
+	<python2.7/Python.h>
+

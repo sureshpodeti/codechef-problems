@@ -1,0 +1,18 @@
+#include<iostream>
+using namespace std;
+
+class MinHeap{
+  int heapCapacity;
+  int *minHeap;
+public:
+  MinHeap();
+};
+
+MinHeap::MinHeap(){
+
+}
+
+int main(){
+
+  return 0;
+}

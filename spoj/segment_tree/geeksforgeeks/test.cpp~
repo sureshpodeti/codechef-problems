@@ -1,0 +1,45 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+class SegmentTree{
+  int no_of_nodes;
+  int *segment_tree;
+  int *lazy_array;
+public:
+  SegmentTree(int *, int);
+  void Build();
+  void Display();
+};
+
+SegmentTree::SegmentTree(int *A, int n){
+  int height = int(log2(n));
+  no_of_nodes = 2*int(pow(2,height)) -1;
+  segment_tree = new int[no_of_nodes];
+  lazy_array = new int[no_of_nodes];
+
+  for(int i=0;i<no_of_nodes;++)
+    lazy_array[i] = 0;
+  
+}
+
+int SegmentTree::ComputeMidIndex(int node_left, int node_right){
+  return node_left + (node_right - node_left)/2;
+}
+void SegmentTree::Build(int node, int node_left, int  node_right, int *A){
+
+  int mid = ComputeMidIndex(node_left, node_right);
+  Build(2*node+1, node_left, node_right, A);
+  Build(2*node+2, node_left, node_right, A);
+  segment_tree[node] = segment_tree[2*node+1] + segment_tree[2*node+2];
+
+}
+void SegmentTree::Dispaly(){
+  for(int i=0;i<no_of_nodes;++i)
+    cout << segment_tree[i] << " ";
+  cout << endl;
+}
+int main(){
+
+  return 0;
+}

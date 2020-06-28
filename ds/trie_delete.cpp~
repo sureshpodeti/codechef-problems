@@ -1,0 +1,84 @@
+#include<iostream>
+
+using namespace std;
+
+const int ALPHABETS_COUNT = 26;
+struct TrieNode{
+  struct TrieTree *childrens[ ALPHABETS_COUNT];
+  bool is_end_of_word;
+
+};
+
+
+struct TrieNode *GetNode(){
+  struct TrieNode *root = new TrieNode;
+
+  for(int i=0;i<ALPHABETS_COUNT;++i)
+    root->childrens[i] = NULL;
+
+  root->is_end_of_word = false;
+
+  return root;
+
+}
+
+
+void InsertKey(struct TrieNode *root, string key){
+  struct TrieNode *tmp_node = root;
+
+  for(int i=0;i<key.length();++i){
+    int index = key[i] - 'a';
+    if(tmp_node->childrens[index]==NULL){
+      tmp_node->childrens[index] = GetNode();
+    }
+
+    tmp_node = tmp_node->childrens[index];
+  }
+  tmp_node->is_end_of_word = true;
+}
+
+
+bool SearchKey(struct TrieNode *root, string key){
+  struct TrieNode *tmp_node = root;
+  for(int i=0;i<key.length();++i){
+    int index = key[i] - 'a';
+    if(tmp_node->childrens[index] == NULL)
+      return false;
+    tmp_node = tmp_node->childrens[index];
+  }
+}
+
+
+bool IsEmpty(struct TrieNode *root){
+  for(int i=0;i<ALPHABETS_COUNT;++i){
+    if(root->childrens[i]!=NULL){
+      return false;
+    }
+  }
+
+  return true;
+
+}
+struct TrieNode *RemoveKey(struct TrieNode *root, string key, int i){
+
+
+  // some code should come here
+  int index = key[i] - 'a';
+  root->childrens[index] = RemoveKey(root->childrens[index], key, i+1);
+
+  if(IsEmpty(root) && root->is_end_of_word==false){
+    delete(root);
+    root = NULL;
+  }
+
+  return root;
+}
+
+int main(){
+  
+  struct TrieNode *root = GetNode();
+
+  
+
+  return 0;
+}

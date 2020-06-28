@@ -1,0 +1,80 @@
+#include<iostream>
+using namespace std;
+
+void ComputeLPS(char*, int*, int);
+void KMPAlgorithm(char*, char*);
+
+void KMPAlgorithm(char *txt, char *pat){
+  int n  = strlen(txt);
+  int m = strlen(pat);
+
+
+  int i=0, j=0;
+
+  int lps[m];
+
+  ComputeLPS(pat, lps, m);
+
+  while(i<n){
+    if(txt[i] == pat[j]){
+      ++i;
+      ++j;
+    }
+
+    
+    // pat completely matches with txt
+    if(j==m){
+      cout << "Found pattern at:" << (i-j) << endl;
+      // set next value of j
+      j = lps[j-1];
+      
+      
+    }else if(i<n && pat[j]!=txt[i]){
+      if(j!=0){
+	j = lps[j-1];
+      }else{
+	++i;
+      }
+
+    }
+
+  }
+
+
+
+}
+void ComputeLPS(char *pat, int *lps, int m){
+  lps[0] = 0;
+  
+  int i=1, len=0;
+  while(i<m){
+    if(pat[i] == pat[len]){
+      ++len;
+      lps[i] = len;
+      ++i;
+    }else{
+      if(len!=0){
+	len = lps[len-1];
+      }else{
+	lps[i] = 0;
+	++i;
+      }
+
+    }
+
+  }   
+
+}
+
+
+int main(){
+  
+  char dna_sequence[] = "atgtctgattcgctaaatcatccatcgagttctacggtgcatgcagatgatggattcgagccaccacatctccggaagacaacaacaaaaaaccgtctttagaacaaattaaacaggaaagagaagcgttgtttacggatctattcgcagatcgtcgacgaagcgctcgttctgtgattaaacctgataccttactgaagacgatcgaacctgcggattatcttgttttgttggcctgtgacgggatttctgacgtcttcaacactagtgatttgtacaatttggttcaggcttttgtcaatgaatatgacgtagaagattatcacgaacttgcacgctacatttgcaatcaagcagtttcagctggaagtgctgacaatgtgacagtagttataggtttcctccgtccaccagaagacgtttggcgtgtaatgaaaacagactcggatgatgaagagagcgagctcgaggaagaagatgacaatgaatag";
+
+
+  char pattern[] = "gtc";
+  KMPAlgorithm(dna_sequence, pattern);
+  cout << endl;
+
+  return 0;
+}

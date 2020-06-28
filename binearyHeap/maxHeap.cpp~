@@ -1,0 +1,60 @@
+#include<iostream>
+
+using namespace std;
+
+class MaxHeap{
+  int *maxHeap;
+  int heapSize;
+  int heapCapacity;
+public:
+  MaxHeap(int);
+};
+
+MaxHeap::MaxHeap(int cap){
+  heapSize=0;
+  heapCapacity=cap;
+  maxHeap = new int[heapCapacity];
+}
+
+int MaxHeap::ParentIndex(int key){
+  return (key-1)/2;
+}
+
+int MaxHeap::RightIndex(int key){
+  return 2*key+1;
+}
+int MaxHeap::LeftIndex(int key){
+  return 2*key+2;
+}
+
+void MaxHeap::InsertKey(int key){
+  if(heapSize>=heapCapacity){
+    cout << "Overflow" << endl;
+    return;
+  }
+
+  maxHeap[heapSize] = key;
+  int i = heapSize;
+  heapSize++;
+
+  while(i!=0 && maxHeap[ParentIndex(i)] < maxHeap[i]){
+    Swap(&maxHeap[Parent(i)], &maxHeap[i]);
+    i = ParentIndex(i);
+  }  
+}
+
+void MaxHeap::Swap(int *a, int *b){
+  *a = *a + *b;
+  *b = *a - *b;
+  *a = *a - *b;
+}
+
+void MaxHeap::Display(){
+  for(int i=0;i<heapSize;++i)
+    cout << maxHeap[i] << " ";
+  cout << endl;
+}
+
+int main(){
+
+}

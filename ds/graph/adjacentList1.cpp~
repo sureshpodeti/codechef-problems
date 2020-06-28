@@ -1,0 +1,25 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+class Graph{
+  int no_of_vertices;
+  vector<int> *graph;
+public:
+  Graph(n);
+};
+
+
+Graph::Graph(int n){
+  no_of_vertices = n;
+
+  graph = new vector<int>[no_of_vertices];
+
+}
+int main(){
+  
+  Graph graph = Graph(5);
+  
+  
+  return 0;
+}

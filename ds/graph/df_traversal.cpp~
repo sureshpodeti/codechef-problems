@@ -1,0 +1,44 @@
+#include<iostream>
+#include<list>
+#include<stack>
+using namespace std;
+
+
+class Graph{
+  int no_of_vertices;
+  list<int> *graph;
+
+public:
+  Graph(int);
+  void AddEdge(int, int);
+  void DepthFirstTraversal();
+};
+
+
+Graph::Graph(int n){
+  no_of_vertices = n;
+
+  graph = new list<int>[no_of_vertices];
+
+}
+
+void Graph::AddEdge(int a, int b){
+  graph[a-1].push_back(b-1);
+}
+
+void Graph::DepthFirstTraversal(){
+  bool visited = new bool[no_of_vertices];
+  for(int i=0;i<no_of_vertices;++i)
+    visited[i] = false;
+
+  stack<int> stk;
+  // push the first element
+  
+
+}
+
+
+int main(){
+
+  return 0;
+}

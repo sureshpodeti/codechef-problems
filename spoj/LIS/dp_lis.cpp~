@@ -1,0 +1,71 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int compute_lis(int *A, int n){
+  // define dp array; ith element will store LIS value of array[0..i]
+  int *dp = new int[n];
+
+  for(int i=0;i<n;++i)
+    dp[i] = 1;
+
+
+  for(int i=1;i<n;++i){
+    for(int j=0;j<i;++j){
+      if(A[j]<=A[i] && dp[j]+1>dp[i]){
+	dp[i]++;
+      }
+    }
+  }
+
+  int result = 1;
+  //get the maximum value of dp array
+  for(int i=0;i<n;++i){
+    result = max(result, dp[i]);
+  }
+
+  return result;
+
+}
+
+
+void get_lis(int *A, int n){
+  vector<int> *dp = new vector<int>[n];
+
+  for(int i=0;i<n;++i)
+    dp[i].push_back(1);
+
+  for(int i=1;i<n;++i){
+    for(int j=0;j<i;++j){
+      if(A[j]<=A[i] && dp[j][0]+1>dp[i][0]){
+	dp[i].push_back(j);
+	dp[i][0]++;
+      }
+    }
+  }
+
+
+  int index = 0;
+  for(int i=0;i<n;++i){
+    if(dp[index][0]<dp[i][0])
+      index = i;
+  }
+
+  cout << index << endl;
+  cout << "LIS:" << dp[index][0] << endl;
+
+  for(auto it=dp[index].begin(); it!=dp[index].end();++it){
+    cout << A[*it] << " ";
+  }
+  cout << endl;
+
+}
+
+int main(){
+  //int A[] = {1,3,2,4};
+  //int A[] = {3,10,2,1,20};
+  int A[] = {50, 3, 10, 7, 40, 80};
+  int n = sizeof(A)/sizeof(A[0]);
+  get_lis(A, n);
+  return 0;
+}

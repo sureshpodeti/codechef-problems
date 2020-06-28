@@ -1,0 +1,34 @@
+#include<iostream>
+
+using namespace std;
+
+class BITree{
+  int no_of_nodes;
+  int *bindex_tree;
+public:
+  BITree(int);
+  void ConstructBITree();
+  int GetSum();
+
+
+
+};
+BITree::BITree(int n){
+  no_of_nodes = n;
+  bindex_tree = new int[no_of_nodes+1];
+  for(int i=1;i<=no_of_nodes;++i){
+    bindex_tree[i] = 0;
+  }
+}
+
+void BITree::ConstructBITree(){
+
+}
+
+
+
+
+int main(){
+
+  return 0;
+}

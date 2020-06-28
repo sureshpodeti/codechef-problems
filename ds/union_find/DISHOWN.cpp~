@@ -1,0 +1,94 @@
+#include<iostream>
+
+using namespace std;
+
+
+class DishTown{
+  int *chefs;
+  int *scores;
+  int no_of_chefs;
+
+public:
+  DishTown(int);
+  int GetParent(int);
+  void Compete(int,int);
+  int ChefWithDish(int);
+  
+};
+
+
+DishTown::DishTown(int n){
+  no_of_chefs = n;
+  chefs = new int[no_of_chefs+1];
+  scores = new int[no_of_chefs+1];
+
+  for(int i=1;i<=no_of_chefs;++i){
+    chefs[i] = i;
+  }
+
+   for(int i=1;i<=no_of_chefs;++i)
+      cin >> scores[i];
+}
+
+
+int DishTown::GetParent(int p){
+  while(p!=chefs[p])
+    p = chefs[p];
+
+  return p;
+}
+
+void DishTown::Compete(int p, int q){
+  int pid = GetParent(p);
+  int qid = GetParent(q);
+
+
+  if(pid==qid){
+    cout << "Invalid query!" << endl;
+    return;
+  }
+
+  if(scores[p] > scores[q]){
+    chefs[qid] = chefs[pid];
+  }else{
+    chefs[pid] = chefs[qid];
+
+  }
+}
+
+int DishTown::ChefWithDish(int p){
+  return GetParent(p);
+}
+
+
+int main(){
+  int T, N, Q, query_type, x, y;
+  cin >> T;
+
+  while(T--){
+    cin >> N;
+    DishTown  dt(N); 
+    cin >> Q;
+
+    for(int i=0;i<Q;++i){
+      cin >> query_type;
+      if(query_type==0){
+	cin >> x >> y;
+	// chef containing dish number x competes with the chef
+	// containing dish number y
+	dt.Compete(x, y);
+      }else{
+	cin >> x;
+	// index of the chef containing dish x at this point
+	cout << dt.ChefWithDish(x) << endl;
+
+      }
+	 
+    }
+
+  }
+  
+
+
+  return 0;
+}

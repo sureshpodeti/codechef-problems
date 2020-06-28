@@ -1,0 +1,25 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+class SegmentTree{
+  int no_of_nodes;
+  int *segment_tree;
+public:
+  SegmentTree(int *, int);
+};
+
+SegmentTree::SegmentTree(int *A, int n){
+  int height = int(ceil(log2(n)));
+  no_of_nodes = 2*int(pow(2,height))-1;
+
+  
+}
+
+int main(){
+  int n;
+  cin >> n;
+
+  cout << fib(n) << endl;
+  return 0;
+}

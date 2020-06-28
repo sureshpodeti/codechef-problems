@@ -1,0 +1,23 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+  
+  // first N rows tells the preference list of men (men prefer women)
+  // next N rows tells the preference list of women ( women prefer men)
+  int prefer[2*N][N] = { {7, 5, 6, 4}, 
+        {5, 4, 6, 7}, 
+        {4, 5, 6, 7}, 
+        {4, 5, 6, 7}, 
+        {0, 1, 2, 3}, 
+        {0, 1, 2, 3}, 
+        {0, 1, 2, 3}, 
+        {0, 1, 2, 3}, 
+    };
+
+
+  
+
+
+  return 0;
+}
